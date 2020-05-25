@@ -8,6 +8,8 @@ window.setup(width=1.0,height=1.0) #весь экран
 window.bgcolor("black")
 window.tracer(2)
 
+rocket_speed = 10
+
 border = turtle.Turtle()   #начальная отрисовка поля
 border.speed(0)
 border.color("yellow")
@@ -22,6 +24,7 @@ border.end_fill()
 border.goto(0,300)      #отрисовка сетки
 border.color("red")
 border.setheading(270)
+
 for i in range(25):
     if i%2==0:
         border.forward(24)
@@ -33,6 +36,23 @@ for i in range(25):
 border.hideturtle()
 
 
+def pause():
+        
+        ball.dx = 0
+        ball.dy = 0
+        rocket_left.goto(-450,0)
+        rocket_right.goto(450,0)
+
+
+
+def resume():
+    
+        ball.dx = choice([-3,-2,-1,1,2,3])
+        ball.dy = choice([-3,-2,-1,1,2,3])
+        rocket_left.goto(-450,0)
+        rocket_right.goto(450,0)
+
+
 rocket_left = turtle.Turtle()          #отрисовка левой ракетки
 rocket_left.color("blue")
 rocket_left.shape("square")
@@ -41,18 +61,17 @@ rocket_left.penup()
 rocket_left.goto(-450,0)
 
 
-def move_up_left():                         #перемещение вверх левой ракетки
-    y = rocket_left.ycor() + 10
-    if y > 250:
-        y = 250 
-    rocket_left.sety(y )
+def move_up_left():                         #перемещение вверх левой ракетки   
+        y = rocket_left.ycor() + rocket_speed
+        if y > 250:
+           y = 250 
+        rocket_left.sety(y )
 
 def move_down_left():                       #перемещение вниз левой ракетки
-
-    y = rocket_left.ycor() - 10
-    if y < -250:
-        y = -250
-    rocket_left.sety(y)
+        y = rocket_left.ycor() - rocket_speed
+        if y < -250:
+           y = -250
+        rocket_left.sety(y)
 
 
 rocket_right = turtle.Turtle()               #отрисовка правой ракетки
@@ -77,18 +96,21 @@ s2.setposition(-200,300)
 s2.write(score_left,font = FONT)
 
 
-def move_up_right():                        #перемещение вверх правой ракетки
-    y = rocket_right.ycor() + 10
-    if y > 250:
-        y = 250 
-    rocket_right.sety(y)
+def move_up_right():                       #перемещение вверх правой ракетки
+        y = rocket_right.ycor() + rocket_speed
+        if y > 250:
+            y = 250 
+        rocket_right.sety(y)
 
 def move_down_right():                      #перемещение вниз правой ракетки
+    
+        y = rocket_right.ycor() - rocket_speed
+        if y < -250:
+          y = -250
+        rocket_right.sety(y)
 
-    y = rocket_right.ycor() - 10
-    if y < -250:
-        y = -250
-    rocket_right.sety(y)
+
+
 
 ball = turtle.Turtle()                      #отрисовка шарика
 ball.shape("circle")
@@ -101,6 +123,12 @@ ball.dy = 2
 ball.penup()
 
 
+
+
+
+    
+
+
 window.listen()                                     #вызов функций перемещения ракеток
 window.onkeypress(move_up_left,"w")
 window.onkeypress(move_up_left,"W")
@@ -108,7 +136,8 @@ window.onkeypress(move_down_left,"s")
 window.onkeypress(move_down_left,"S")
 window.onkeypress(move_up_right,"Up")
 window.onkeypress(move_down_right,"Down")
-
+window.onkeypress(pause,"p")
+window.onkeypress(resume," ")
 
 while True:
     window.update()
