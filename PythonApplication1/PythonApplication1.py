@@ -1,6 +1,9 @@
 import turtle
 from random import choice, randint
 
+rocket_speed = 50
+ball_speed_x = choice([-3,-2,-1,1,2,3])
+ball_speed_y = choice([-3,-2,-1,1,2,3])
 
 window = turtle.Screen()
 window.title("Ping-pong")
@@ -11,7 +14,7 @@ window.tracer(2)
 
 
 border = turtle.Turtle()   #начальная отрисовка поля
-border.speed(0)
+border.speed(100)
 border.color("yellow")
 border.begin_fill()
 border.goto(-500,300)
@@ -62,16 +65,18 @@ rocket_left.goto(-450,0)
 
 
 def move_up_left():                       #перемещение вверх правой ракетки
-    y = rocket_left.ycor() + 10
+    y = rocket_left.ycor() + rocket_speed
     if y > 250:
         y = 250 
     rocket_left.sety(y)
+    
 
 def move_down_left():                      #перемещение вниз правой ракетки
-    y = rocket_left.ycor() - 10
+    y = rocket_left.ycor() - rocket_speed
     if y < -250:
         y = -250
     rocket_left.sety(y)
+    
 
 
 rocket_right = turtle.Turtle()               #отрисовка правой ракетки
@@ -97,16 +102,18 @@ s2.write(score_left,font = FONT)
 
 
 def move_up_right():                       #перемещение вверх правой ракетки
-    y = rocket_right.ycor() + 10
+    y = rocket_right.ycor() + rocket_speed
     if y > 250:
         y = 250 
     rocket_right.sety(y)
+    
 
 def move_down_right():                      #перемещение вниз правой ракетки
-    y = rocket_right.ycor() - 10
+    y = rocket_right.ycor() - rocket_speed
     if y < -250:
         y = -250
     rocket_right.sety(y)
+    
 
 
 
@@ -129,10 +136,11 @@ ball.penup()
 
 
 window.listen()                                     #вызов функций перемещения ракеток
-window.onkeypress(move_up_left,"w")
-window.onkeypress(move_up_left,"W")
-window.onkeypress(move_down_left,"s")
-window.onkeypress(move_down_left,"S")
+window.onkeypress(move_up_left,"1")
+#window.onkeypress(move_up_left,"W")
+window.onkeypress(move_down_left,"4")
+#window.onkeypress(move_down_left,"S")
+window.listen() 
 window.onkeypress(move_up_right,"Up")
 window.onkeypress(move_down_right,"Down")
 window.onkeypress(pause,"p")
